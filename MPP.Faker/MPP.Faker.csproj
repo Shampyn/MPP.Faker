@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BooleanGenerator.cs" />
+    <Compile Include="Faker.cs" />
+    <Compile Include="IGenerator.cs" />
+    <Compile Include="IntegerGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

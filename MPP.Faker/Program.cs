@@ -10,6 +10,12 @@ namespace MPP.Faker
     {
         static void Main(string[] args)
         {
+
+            Faker faker = new Faker();
+            int t = faker.Create<int>();
+            bool b = faker.Create<bool>();
+            Console.WriteLine("{0}, {1}", t, b);
+            Console.ReadLine();
         }
     }
 }
