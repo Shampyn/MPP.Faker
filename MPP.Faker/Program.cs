@@ -75,7 +75,7 @@ namespace MPP.Faker
 
             D classtest = faker.Create<D>();
 
-            Console.WriteLine("{0}, {1},{2}", classtest.k, classtest.a, classtest.b);
+           Console.WriteLine("{0}, {1},{2}",classtest.k,classtest.a,classtest.b);
             Console.ReadLine();
 
         }

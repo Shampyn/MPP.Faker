@@ -8,35 +8,29 @@ using System.Threading.Tasks;
 
 namespace MPP.Faker
 {
-    class ListGenerator:IListGenerator
+    class ListGenerator : IListGenerator
     {
-        private Dictionary<Type, IGenerator> AvailableGenerators = new Dictionary<Type, IGenerator>();
+        private Dictionary<Type, IGenerator> _availableGenerators = new Dictionary<Type, IGenerator>();
+        private Faker _currentFaker;
+        private Random _random = new Random();
 
-        public ListGenerator(Dictionary<Type, IGenerator> Generators)
+        public ListGenerator(Dictionary<Type, IGenerator> Generators, Faker MainFaker)
         {
-            AvailableGenerators = Generators;
+            _availableGenerators = Generators;
+            _currentFaker = MainFaker;
         }
 
-        public object Generate(Type listtype)
+
+        public object Generate(Type type)
         {
-            IList listinstance = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(listtype));
-            Random rnd = new Random();
-            int listsize = rnd.Next(1, 10);
+            IList listinstance = (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(type));
+            int listsize = _random.Next(1, 21);
             for (int i = 0; i < listsize; i++)
             {
-                IGenerator value;
-                AvailableGenerators.TryGetValue(listtype, out value);
-                if (value != null)
-                {
-                    listinstance.Add(value.Generate());
-                }
-                else
-                {
-                    listinstance.Add(null);
-                }
+                listinstance.Add(_currentFaker.Create(type));
             }
             return listinstance;
-        }
 
+        }
     }
 }
