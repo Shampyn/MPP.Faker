@@ -7,9 +7,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MPP.Faker
+namespace FakerLibrary
 {
-    class Faker
+   public class Faker
     {
 
         private string _path = Path.GetDirectoryName(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName);

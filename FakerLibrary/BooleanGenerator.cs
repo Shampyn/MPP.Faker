@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MPP.Faker
+namespace FakerLibrary
 {
-    class BooleanGenerator : IGenerator
+   public class BooleanGenerator : IGenerator
     {
         public Type GeneratedType()
         {

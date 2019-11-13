@@ -47,7 +47,6 @@
     <Compile Include="BooleanGenerator.cs" />
     <Compile Include="ByteGenerator.cs" />
     <Compile Include="CharGenerator.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="DoubleGenerator.cs" />
     <Compile Include="Faker.cs" />
     <Compile Include="FloatGenerator.cs" />

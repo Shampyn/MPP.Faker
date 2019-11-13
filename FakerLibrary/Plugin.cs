@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using IGeneratorLibrary;
 
-namespace MPP.Faker
+namespace FakerLibrary
 {
-    class Plugin
+    public class Plugin
     {
         public static readonly string path = "\\Plugins\\";
 

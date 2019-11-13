@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MPP.Faker
+namespace FakerLibrary
 {
-    class FloatGenerator : IGenerator
+    public class FloatGenerator : IGenerator
     {
         private Random _random = new Random();
         public object Generate()

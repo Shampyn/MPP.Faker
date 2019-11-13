@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MPP.Faker
+namespace FakerLibrary
 {
-    class ListGenerator : IListGenerator
+    public  class ListGenerator : IListGenerator
     {
         private Dictionary<Type, IGenerator> _availableGenerators = new Dictionary<Type, IGenerator>();
         private Faker _currentFaker;

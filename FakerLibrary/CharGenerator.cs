@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MPP.Faker
+namespace FakerLibrary
 {
-    class CharGenerator : IGenerator
+    public class CharGenerator : IGenerator
     {
         private Random _random = new Random();
 
