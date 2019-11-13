@@ -9,10 +9,12 @@ namespace MPP.Faker
 {
     class DoubleGenerator : IGenerator
     {
+        private Random _random = new Random();
+
         public object Generate()
         {
-            Random random = new Random();
-            return random.NextDouble();
+            
+            return _random.NextDouble();
         }
 
         public Type GeneratedType()

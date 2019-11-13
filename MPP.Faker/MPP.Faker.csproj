@@ -53,6 +53,8 @@
     <Compile Include="DoubleGenerator.cs" />
     <Compile Include="Faker.cs" />
     <Compile Include="FloatGenerator.cs" />
+    <Compile Include="IListGenerator.cs" />
+    <Compile Include="ListGenerator.cs" />
     <Compile Include="LongGenerator.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Program.cs" />

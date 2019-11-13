@@ -9,14 +9,15 @@ namespace MPP.Faker
 {
     class StringGenerator : IGenerator
     {
+        private Random _random = new Random();
         public object Generate()
         {
-            Random random = new Random();
-            int length = random.Next(1, 10); 
+            
+            int length = _random.Next(1, 10); 
             string result = "";
             for (int i = 0; i < length; i++)
             {
-                result += (char)random.Next(0, 256);
+                result += (char)_random.Next(0, 256);
             }
             return result;
         }

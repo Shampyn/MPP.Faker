@@ -9,10 +9,11 @@ namespace MPP.Faker
 {
     class CharGenerator : IGenerator
     {
+        private Random _random = new Random();
+
         public object Generate()
         {
-            Random random = new Random();
-            return (char)random.Next(0, 256);
+          return (char)_random.Next(0, 256);
         }
 
         public Type GeneratedType()

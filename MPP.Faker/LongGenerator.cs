@@ -9,11 +9,11 @@ namespace MPP.Faker
 {
     class LongGenerator : IGenerator
     {
+        private Random _random = new Random();
         public object Generate()
         {
-            Random random = new Random();
             byte[] bytes = new byte[8];
-            random.NextBytes(bytes);
+            _random.NextBytes(bytes);
             return BitConverter.ToInt64(bytes, 0);
         }
 

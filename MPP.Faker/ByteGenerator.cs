@@ -9,10 +9,12 @@ namespace MPP.Faker
 {
     class ByteGenerator : IGenerator
     {
+        private Random _random = new Random();
+
         public object Generate()
         {
-            Random random = new Random();
-            return (byte)random.Next(1, byte.MaxValue);
+            
+            return (byte)_random.Next(1, byte.MaxValue);
         }
 
         public Type GeneratedType()
