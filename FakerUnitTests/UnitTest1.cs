@@ -46,9 +46,9 @@ namespace FakerUnitTests
         public bool b { get; set; }
         private float f;
         public float publicf { get { return f; } }
-        private string str = "I am private";
+        private string str = "Private";
         public string publicstr { get { return str; } }
-        public string str2 = "Hell";
+        public string str2 = "public";
         public string publicstr2 { get { return str2; } }
         public ClassWithDifferentConstructors(int a, bool b)
         {
@@ -148,7 +148,7 @@ namespace FakerUnitTests
             Assert.IsNotNull(differentConstructors);
             Assert.AreNotEqual(default(int), differentConstructors.a);
             Assert.AreNotEqual(default(bool), differentConstructors.b);
-            Assert.AreEqual("I am private", differentConstructors.publicstr);
+            Assert.AreEqual("Private", differentConstructors.publicstr);
             Assert.AreEqual(default(float), differentConstructors.publicf);
         }
 
