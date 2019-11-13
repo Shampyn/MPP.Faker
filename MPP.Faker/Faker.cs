@@ -14,7 +14,7 @@ namespace MPP.Faker
 
         private string _path = Path.GetDirectoryName(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName);
         public Dictionary<Type, IGenerator> Generators = new Dictionary<Type, IGenerator>();
-        public Stack<Type> generationStack;
+        public Stack<Type> generationStack = new Stack<Type>();
         public ListGenerator listGenerator;
 
         public Faker()
@@ -34,7 +34,13 @@ namespace MPP.Faker
         public T Create<T>()
             {
                 Type type = typeof(T);
-                if (type.IsAbstract || type.IsInterface || type == typeof(void))
+
+                if (generationStack.Contains(type))
+                {
+                return default(T);
+                }
+
+            if (type.IsAbstract || type.IsInterface || type == typeof(void))
                 {
                     return default(T);
                 }
@@ -51,9 +57,29 @@ namespace MPP.Faker
 
                 if (!type.IsAbstract || !type.IsPrimitive)
                 {
+                    generationStack.Push(type);
                     ConstructorInfo ConstructorWithMaxArgs = GetConstructorWithMaxParams(type);
+                    if (ConstructorWithMaxArgs != null)
+                    {
                     var instance = GenerateObjectFromConstructor(ConstructorWithMaxArgs);
-                    return (T)GenerateFieldsAndProperties(type, instance);
+                    instance = (T)GenerateFieldsAndProperties(type, instance);
+                    generationStack.Pop();
+                    return (T)instance;
+                    }
+                    else
+                    {
+                    if (type.GetConstructors().Count() != 0)
+                    {
+                        var instance = Activator.CreateInstance(type);
+                        instance = (T)GenerateFieldsAndProperties(type, instance);
+                        generationStack.Pop();
+                        return (T)instance;
+                    }
+                    else
+                    {
+                        return default(T);
+                    }
+                    }              
                 }
                 return default(T);
             }
@@ -98,23 +124,18 @@ namespace MPP.Faker
             FieldInfo[] fields = type.GetFields();
             foreach (FieldInfo field in fields)
             {
-                IGenerator value;
-                Generators.TryGetValue(field.FieldType, out value);
-                field.SetValue(instance, value.Generate());
+                MethodInfo method = typeof(Faker).GetMethod("Create");
+                MethodInfo genericMethod = method.MakeGenericMethod(field.FieldType);
+                object value = genericMethod.Invoke(this, null);
+                field.SetValue(instance, value);
             }
             PropertyInfo[] properties = type.GetProperties();
             foreach (PropertyInfo property in properties)
             {
-                if (property.PropertyType.IsGenericType) 
-                {
-                    property.SetValue(instance, listGenerator.Generate((Type)property.PropertyType.GenericTypeArguments.GetValue(0)));                  
-                }
-                else
-                {
-                    IGenerator value;
-                    Generators.TryGetValue(property.PropertyType, out value);
-                    property.SetValue(instance, value.Generate());
-                }               
+                MethodInfo method = typeof(Faker).GetMethod("Create");
+                MethodInfo genericMethod = method.MakeGenericMethod(property.PropertyType);
+                object value = genericMethod.Invoke(this, null);
+                property.SetValue(instance, value);
             }
             return instance;
         }
