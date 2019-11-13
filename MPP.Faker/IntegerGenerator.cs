@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace MPP.Faker
 {
-    class IntegerGenerator : IGenerator<int>
+    class IntegerGenerator : IGenerator
     {
-        public int Generate()
+        public Type GeneratedType()
         {
-            Random random = new Random();
+            return typeof(int);
+        }
+
+        public object Generate()
+        {
+           Random random = new Random();
 
             if (random.Next(2) == 0)
             {

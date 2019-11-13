@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8157F484-6CF5-42D6-A8B2-087C343FEE28}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>MPP.Faker</RootNamespace>
-    <AssemblyName>MPP.Faker</AssemblyName>
+    <ProjectGuid>{A6928CF3-9647-4871-8756-3553A9DEB013}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>StringGenerator</RootNamespace>
+    <AssemblyName>StringGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,9 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IGeneratorLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\IGeneratorLibrary\IGeneratorLibrary\bin\Debug\IGeneratorLibrary.dll</HintPath>
+    <Reference Include="IGeneratorLibrary">
+      <HintPath>..\..\IGeneratorLibrary\IGeneratorLibrary\bin\Debug\IGeneratorLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,20 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BooleanGenerator.cs" />
-    <Compile Include="ByteGenerator.cs" />
-    <Compile Include="CharGenerator.cs" />
-    <Compile Include="DoubleGenerator.cs" />
-    <Compile Include="Faker.cs" />
-    <Compile Include="FloatGenerator.cs" />
-    <Compile Include="LongGenerator.cs" />
-    <Compile Include="Plugin.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringGenerator.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

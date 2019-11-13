@@ -14,7 +14,9 @@ namespace MPP.Faker
             Faker faker = new Faker();
             int t = faker.Create<int>();
             bool b = faker.Create<bool>();
-            Console.WriteLine("{0}, {1}", t, b);
+            byte c = faker.Create<byte>();
+            string str = faker.Create<string>();
+            Console.WriteLine("{0}, {1}, {2}  - {3} ", t, b, c, str);
             Console.ReadLine();
         }
     }

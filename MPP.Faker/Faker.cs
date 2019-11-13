@@ -1,6 +1,9 @@
-﻿using System;
+﻿using IGeneratorLibrary;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,25 +11,35 @@ namespace MPP.Faker
 {
     class Faker
     {
+
+        private string _path = Path.GetDirectoryName(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName);
+        public Dictionary<Type, IGenerator> Generators = new Dictionary<Type, IGenerator>();
+        public Stack<Type> generationStack;
+
+        public Faker()
+        {
+            
+            List<Assembly> Plugins = Plugin.LoadPlugin(_path + Plugin.path + "IntegerGenerator.dll",_path + Plugin.path + "StringGenerator.dll");
+         
+
+            Generators = Plugin.GetGenerators(Plugins);
+            Generators.Add(typeof(bool), new BooleanGenerator());
+            Generators.Add(typeof(byte), new ByteGenerator());
+            Generators.Add(typeof(long), new LongGenerator());
+            Generators.Add(typeof(float), new FloatGenerator());
+            Generators.Add(typeof(double), new DoubleGenerator());
+            Generators.Add(typeof(char), new CharGenerator());
+        }
+
         public T Create<T>()
         {
-            if (typeof(T) == typeof(int))
+            foreach (KeyValuePair<Type, IGenerator> generator in Generators)
             {
-                IntegerGenerator intgen = new IntegerGenerator();
-                int test = intgen.Generate();
-                return (T)(object)test;
+                if (generator.Key == typeof(T))
+                    return (T)generator.Value.Generate();
             }
-            if (typeof(T) == typeof(bool))
-            {
-                BooleanGenerator boolgen = new BooleanGenerator();
-                bool test = boolgen.Generate();
-                return (T)(object)test;
-            }
-            else
-            {
-                return default(T);
-            }
-            
+            return default(T);
+                     
         }
 
 
