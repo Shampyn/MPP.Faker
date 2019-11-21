@@ -11,16 +11,15 @@ namespace MPP.Faker
 {
     class Faker
     {
-
         private string _path = Path.GetDirectoryName(Directory.GetParent(Environment.CurrentDirectory).Parent.FullName);
         public Dictionary<Type, IGenerator> Generators = new Dictionary<Type, IGenerator>();
         public Stack<Type> generationStack = new Stack<Type>();
         public ListGenerator listGenerator;
 
         public Faker()
-        {        
-            List<Assembly> Plugins = Plugin.LoadPlugin(_path + Plugin.path + "IntegerGenerator.dll",_path + Plugin.path + "StringGenerator.dll");
-        
+        {
+            List<Assembly> Plugins = Plugin.LoadPlugin(_path + Plugin.path + "IntegerGenerator.dll", _path + Plugin.path + "StringGenerator.dll");
+
             Generators = Plugin.GetGenerators(Plugins);
             Generators.Add(typeof(bool), new BooleanGenerator());
             Generators.Add(typeof(byte), new ByteGenerator());
@@ -28,19 +27,19 @@ namespace MPP.Faker
             Generators.Add(typeof(float), new FloatGenerator());
             Generators.Add(typeof(double), new DoubleGenerator());
             Generators.Add(typeof(char), new CharGenerator());
-            listGenerator = new ListGenerator(Generators, this);
+            listGenerator = new ListGenerator(this);
         }
 
         public object Create(Type type)
         {
             if (generationStack.Contains(type))
             {
-             return null;
+                return null;
             }
 
             if (type.IsAbstract || type.IsInterface || type == typeof(void))
             {
-              return null;
+                return null;
             }
 
             IGenerator value;
@@ -56,23 +55,21 @@ namespace MPP.Faker
                 Type t = type.GetType();
                 return listGenerator.Generate((Type)type.GenericTypeArguments.GetValue(0));
             }
-                
-                
 
-                if (!type.IsAbstract || !type.IsPrimitive)
-                {
+            if (!type.IsAbstract || !type.IsPrimitive)
+            {
                 generationStack.Push(type);
                 ConstructorInfo ConstructorWithMaxArgs = GetConstructorWithMaxParams(type);
 
                 if (ConstructorWithMaxArgs != null)
-                    {
+                {
                     var instance = GenerateObjectFromConstructor(ConstructorWithMaxArgs);
                     instance = GenerateFieldsAndProperties(type, instance);
                     generationStack.Pop();
                     return instance;
-                    }
-                    else
-                    {
+                }
+                else
+                {
                     if (type.GetConstructors().Count() != 0)
                     {
                         var instance = Activator.CreateInstance(type);
@@ -84,9 +81,9 @@ namespace MPP.Faker
                     {
                         return null;
                     }
-                    }              
                 }
-                return null;
+            }
+            return null;
         }
 
         public T Create<T>()
@@ -98,16 +95,17 @@ namespace MPP.Faker
             return (T)Create(typeof(T));
         }
 
+
         private ConstructorInfo GetConstructorWithMaxParams(Type type)
         {
             ConstructorInfo constructorwithmaxparams = null;
-            int count = 0;
+            int count = -1;
             foreach (ConstructorInfo constructor in type.GetConstructors())
             {
-                if (count < constructor.GetParameters().Count())
+                if (count < constructor.GetParameters().Length)
                 {
                     constructorwithmaxparams = constructor;
-                    count = constructor.GetParameters().Count();
+                    count = constructor.GetParameters().Length;
                 }
             }
             return constructorwithmaxparams;

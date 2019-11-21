@@ -28,7 +28,7 @@ namespace FakerLibrary
             Generators.Add(typeof(float), new FloatGenerator());
             Generators.Add(typeof(double), new DoubleGenerator());
             Generators.Add(typeof(char), new CharGenerator());
-            listGenerator = new ListGenerator(Generators, this);
+            listGenerator = new ListGenerator(this);
         }
 
         public object Create(Type type)
@@ -56,41 +56,27 @@ namespace FakerLibrary
                 Type t = type.GetType();
                 return listGenerator.Generate((Type)type.GenericTypeArguments.GetValue(0));
             }
-                
-                
 
-                if (!type.IsAbstract || !type.IsPrimitive)
+            if (!type.IsAbstract || !type.IsPrimitive)
                 {
                 generationStack.Push(type);
                 ConstructorInfo ConstructorWithMaxArgs = GetConstructorWithMaxParams(type);
 
                 if (ConstructorWithMaxArgs != null)
-                    {
+                {
                     var instance = GenerateObjectFromConstructor(ConstructorWithMaxArgs);
                     instance = GenerateFieldsAndProperties(type, instance);
                     generationStack.Pop();
                     return instance;
-                    }
-                    else
-                    {
-                    if (type.GetConstructors().Count() != 0)
-                    {
-                        var instance = Activator.CreateInstance(type);
-                        instance = GenerateFieldsAndProperties(type, instance);
-                        generationStack.Pop();
-                        return instance;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                    }              
                 }
+                else return null;              
+            }
                 return null;
         }
 
         public T Create<T>()
         {
+
             if (Create(typeof(T)) == null)
             {
                 return default(T);
@@ -101,7 +87,7 @@ namespace FakerLibrary
         private ConstructorInfo GetConstructorWithMaxParams(Type type)
         {
             ConstructorInfo constructorwithmaxparams = null;
-            int count = 0;
+            int count = -1;
             foreach (ConstructorInfo constructor in type.GetConstructors())
             {
                 if (count < constructor.GetParameters().Count())

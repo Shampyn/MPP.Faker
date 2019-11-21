@@ -10,13 +10,13 @@ namespace FakerLibrary
 {
     public  class ListGenerator : IListGenerator
     {
-        private Dictionary<Type, IGenerator> _availableGenerators = new Dictionary<Type, IGenerator>();
+        
         private Faker _currentFaker;
         private Random _random = new Random();
 
-        public ListGenerator(Dictionary<Type, IGenerator> Generators, Faker MainFaker)
+        public ListGenerator(Faker MainFaker)
         {
-            _availableGenerators = Generators;
+       
             _currentFaker = MainFaker;
         }
 

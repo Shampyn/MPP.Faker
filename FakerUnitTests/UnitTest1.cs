@@ -85,10 +85,43 @@ namespace FakerUnitTests
     }
 
 
+    public struct S
+    {
+        public long a;
+
+        public char c;
+
+        public S (long x, char z)
+        {
+            a = x;
+            c = z;
+        }
+    }
+
+    class ClassWithConstructorsWithoutParams
+    {
+        private char C;
+
+        public char CProp => C;
+
+        public ClassWithConstructorsWithoutParams()
+        {
+            C = 'c';
+        }
+    }
+    class ClassWithoutConstructor
+    {
+        public char c;
+        public long l;
+    }
+
     [TestClass]
     public class UnitTest1
     {
         private readonly Faker faker = new Faker();
+
+       
+
 
         [TestMethod]
         public void ShouldFillIntWithNotDefaultValue()
@@ -157,6 +190,29 @@ namespace FakerUnitTests
         {
             List<ListTest> lt = faker.Create<List<ListTest>>();
             Assert.IsNotNull(lt);
+        }
+
+        [TestMethod]
+        public void ShouldFillStruct()
+        {
+            S structure = faker.Create<S>();
+            Assert.AreNotEqual(default(long),structure.a);
+            Assert.AreNotEqual(default(char), structure.c);
+        }
+        [TestMethod]
+
+        public void ShouldFillfields()
+        {
+            ClassWithConstructorsWithoutParams noparams = faker.Create<ClassWithConstructorsWithoutParams>();
+            Assert.AreEqual(noparams.CProp, 'c');
+        }
+
+        [TestMethod]
+        public void ShouldFillFields()
+        {
+            ClassWithoutConstructor noconstr = faker.Create<ClassWithoutConstructor>();
+            Assert.AreNotEqual(default(char), noconstr.c);
+            Assert.AreNotEqual(default(long), noconstr.l);
 
         }
     }

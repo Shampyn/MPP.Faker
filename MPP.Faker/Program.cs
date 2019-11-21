@@ -51,12 +51,36 @@ namespace MPP.Faker
         }
     }
 
+    public class cl
+    {
+        private char c;
+
+        public cl()
+        {
+            c = 'c';
+        }
+    }
+
+
+    class ClassWithoutConstructor
+    {
+        public char c;
+        public long l;
+    }
+
+
     class Program
     {
         static void Main(string[] args)
         {
 
             Faker faker = new Faker();
+
+            cl Cl = faker.Create<cl>();
+
+            ClassWithoutConstructor noconstr = faker.Create<ClassWithoutConstructor>();
+
+
             int t = faker.Create<int>();
             bool b = faker.Create<bool>();
             byte c = faker.Create<byte>();        
